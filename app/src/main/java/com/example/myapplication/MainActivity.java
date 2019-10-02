@@ -9,22 +9,28 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.NumberPicker;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button ButtonA;
-    private Button ButtonBb;
-    private Button ButtonB;
-    private Button ButtonC;
-    private Button ButtonCc;
-    private Button ButtonD;
-    private Button ButtonDd;
-    private Button ButtonE;
-    private Button ButtonF;
-    private Button ButtonFf;
-    private Button ButtonG;
-    private Button ButtonGg;
+    private Button buttonA;
+    private Button buttonBb;
+    private Button buttonB;
+    private Button buttonC;
+    private Button buttonCc;
+    private Button buttonD;
+    private Button buttonDd;
+    private Button buttonE;
+    private Button buttonF;
+    private Button buttonFf;
+    private Button buttonG;
+    private Button buttonGg;
     private Button Scale;
-    private Button Ttls;
+    private Button Iits;
+    private NumberPicker typeOfNote;
+    private NumberPicker amountOfTimes;
+    private Button playNp;
+    private int[] notesArray;
+    private Button congragulations;
 
 
     private SoundPool soundPool;
@@ -52,7 +58,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intializeSoundPool();
         this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
         wireWidgets();
+        typeOfNote.setMaxValue(12);
+        typeOfNote.setMinValue(1);
+        typeOfNote.setDisplayedValues(new String[]{"A", "B", "B♭", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"});
+        amountOfTimes.setMinValue(1);
+        amountOfTimes.setMaxValue(8);
+        amountOfTimes.setDisplayedValues(new String[]{"1", "2", "3", "4", "5", "6", "7", "8"});
         setListners();
+        notesArray = new int[]{aNote, bNote, bbNote, cNote, ccNote, dNote, ddNote, eNote, fNote, ffNote, gNote, ggNote};
         soundPool.setOnLoadCompleteListener(new OnLoadCompleteListener() {
             @Override
             public void onLoadComplete(SoundPool soundPool, int sampleId,
@@ -61,22 +74,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        Chord chordEm = new Chord(new int[] { gNote,bNote,eNote}, 500);
+        Chord chordEm = new Chord(new int[]{gNote, bNote, eNote}, 500);
         playChord(chordEm);
-
 
 
         // Load the sound
 
     }
 
-    private void playChord(Chord chord){
+    private void playChord(Chord chord) {
         // use the getter to make an array with the notes
         int[] notes = (chord.getNotes());
 
 
         // loop through the array and play each note
-        for(int note: notes){
+        for (int note : notes) {
             soundPool.play(note, 1, 1, 1, 0, 1f);
         }
 
@@ -103,24 +115,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void wireWidgets() {
-        ButtonA = findViewById(R.id.button_main_A);
-        ButtonBb = findViewById(R.id.button_main_Bb);
-        ButtonB = findViewById(R.id.button_main_B);
-        ButtonC = findViewById(R.id.button_main_C);
-        ButtonCc = findViewById(R.id.button_main_Cc);
-        ButtonD = findViewById(R.id.button_main_D);
-        ButtonDd = findViewById(R.id.button_main_Dd);
-        ButtonE = findViewById(R.id.button_main_E);
-        ButtonF = findViewById(R.id.button_main_F);
-        ButtonFf = findViewById(R.id.button_main_Ff);
-        ButtonG = findViewById(R.id.button_main_G);
-        ButtonGg = findViewById(R.id.button_main_Gg);
+        buttonA = findViewById(R.id.button_main_A);
+        buttonBb = findViewById(R.id.button_main_Bb);
+        buttonB = findViewById(R.id.button_main_B);
+        buttonC = findViewById(R.id.button_main_C);
+        buttonCc = findViewById(R.id.button_main_Cc);
+        buttonD = findViewById(R.id.button_main_D);
+        buttonDd = findViewById(R.id.button_main_Dd);
+        buttonE = findViewById(R.id.button_main_E);
+        buttonF = findViewById(R.id.button_main_F);
+        buttonFf = findViewById(R.id.button_main_Ff);
+        buttonG = findViewById(R.id.button_main_G);
+        buttonGg = findViewById(R.id.button_main_Gg);
         Scale = findViewById(R.id.button_main_scale);
-        Ttls = findViewById(R.id.button_main_iits);
+        Iits = findViewById(R.id.button_main_iits);
+        typeOfNote = findViewById(R.id.numberPicker_main_notes);
+        amountOfTimes = findViewById(R.id.numberPicker_main_amountofTime);
+        playNp = findViewById(R.id.button_main_playNumberPicker);
+        congragulations = findViewById((R.id.button_main_congragulations));
     }
 
     private void setListners() {
-        ButtonA.setOnClickListener(new View.OnClickListener() {
+        buttonA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
@@ -138,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         });
-        ButtonB.setOnClickListener(new View.OnClickListener() {
+        buttonB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
@@ -156,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         });
-        ButtonBb.setOnClickListener(new View.OnClickListener() {
+        buttonBb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
@@ -174,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         });
-        ButtonC.setOnClickListener(new View.OnClickListener() {
+        buttonC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
@@ -192,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         });
-        ButtonCc.setOnClickListener(new View.OnClickListener() {
+        buttonCc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
@@ -210,7 +226,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         });
-        ButtonD.setOnClickListener(new View.OnClickListener() {
+        buttonD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
@@ -228,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         });
-        ButtonDd.setOnClickListener(new View.OnClickListener() {
+        buttonDd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
@@ -246,7 +262,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         });
-        ButtonE.setOnClickListener(new View.OnClickListener() {
+        buttonE.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
@@ -264,7 +280,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         });
-        ButtonF.setOnClickListener(new View.OnClickListener() {
+        buttonF.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
@@ -282,7 +298,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         });
-        ButtonFf.setOnClickListener(new View.OnClickListener() {
+        buttonFf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
@@ -300,7 +316,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         });
-        ButtonG.setOnClickListener(new View.OnClickListener() {
+        buttonG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
@@ -318,7 +334,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         });
-        ButtonGg.setOnClickListener(new View.OnClickListener() {
+        buttonGg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
@@ -339,7 +355,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         Scale.setOnClickListener(this);
-        Ttls.setOnClickListener(this);
+        Iits.setOnClickListener(this);
+        playNp.setOnClickListener(this);
+        congragulations.setOnClickListener(this);
 
 
     }
@@ -353,7 +371,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
     @Override
     public void onClick(View view) {
 
@@ -364,10 +381,46 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             case R.id.button_main_scale: {
                 playScale();
+                break;
             }
+            case R.id.button_main_playNumberPicker: {
+                if (isSoundPoolLoaded) {
+                    int currentNote = notesArray[typeOfNote.getValue() - 1];
+                    for (int i = 0; i < amountOfTimes.getValue(); i++) {
+                        soundPool.play(currentNote, 1, 1, 1, 0, 1f);
+                        delay(500);
 
+                    }
+                }
+                break;
 
+            }
+            case R.id.button_main_congragulations:{
+                playCongragulations();
+            }
         }
+
+
+    }
+
+    private void playCongragulations() {
+        Chord chordG = new Chord(new int[]{gNote, bNote, dNote}, 1000);
+        playChord(chordG);
+        Chord chordGf = new Chord(new int[]{ffNote,gNote,bNote,dNote},1000);
+        playChord(chordGf);
+        Chord chordEm = new Chord(new int[]{eNote, gNote, bNote}, 1000);
+        playChord(chordEm);
+        Chord chordEm7 = new Chord(new int[]{eNote,gNote, bNote, dNote}, 1000);
+        playChord(chordEm7);
+        Chord chordC = new Chord(new int[]{cNote, eNote, gNote}, 1000);
+        playChord(chordC);
+        Chord chordCb = new Chord(new int[]{bNote, cNote, eNote, gNote}, 1000);
+        playChord(chordCb);
+        Chord chordAm = new Chord(new int[]{aNote, cNote, eNote}, 1000);
+        playChord(chordAm);
+        Chord chordAsus2 = new Chord(new int[]{aNote, bNote, eNote}, 1000);
+        playChord(chordAsus2);
+
     }
 
     private void playScale() {
@@ -403,7 +456,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             soundPool.play(ggNote, volume, volume, 1, 0, 1f);
 
 
-
         }
     }
 
@@ -414,29 +466,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         float maxVolume = (float) audioManager
                 .getStreamMaxVolume(AudioManager.STREAM_MUSIC);
         final float volume = actualVolume / maxVolume;
-        Chord chordEm = new Chord(new int[] { gNote,bNote,eNote}, 500);
+        Chord chordEm = new Chord(new int[]{gNote, bNote, eNote}, 500);
         playChord(chordEm);
         playChord(chordEm);
-        Chord chordAm = new Chord(new int[] {aNote, cNote, eNote}, 500);
+        Chord chordAm = new Chord(new int[]{aNote, cNote, eNote}, 500);
         playChord(chordAm);
         playChord(chordAm);
-        Chord chordD = new Chord(new int[] {dNote,ffNote,aNote},500);
+        Chord chordD = new Chord(new int[]{dNote, ffNote, aNote}, 500);
         playChord(chordD);
         playChord(chordD);
-        Chord chordG = new Chord(new int[] {gNote, bNote, dNote}, 500);
+        Chord chordG = new Chord(new int[]{gNote, bNote, dNote}, 500);
         playChord(chordG);
         playChord(chordG);
-
-
-
-
-
-
-
-
-
 
 
         delay(100);
-        }
     }
+}
